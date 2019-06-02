@@ -58,7 +58,6 @@ func Test_biro_anagram_should_contains_all_elements(t *testing.T) {
 	}
 }
 
-
 func contains(s []string, e string) bool {
 	for _, a := range s {
 		if a == e {
@@ -67,4 +66,3 @@ func contains(s []string, e string) bool {
 	}
 	return false
 }
-
