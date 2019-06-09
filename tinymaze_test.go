@@ -73,3 +73,19 @@ func Test_MazeWithOnlyStartAndEndInOneRow(t *testing.T){
 	expected := Maze{{":x", ":x"}}
 	assert.Equal(t, expected ,solvedMaze)
 }
+
+func Test_MazeWithStartEndAndAWallBetween_ShouldReturnError(t *testing.T){
+	maze := [][]string{
+		{":S", "1", ":E"},
+	}
+
+	solver := TinyMazeSolver{}
+
+	_, err := solver.Solve(maze)
+
+	if err != nil {
+		assert.Equal(t, "maze without solution", err.Error())
+	} else {
+		assert.Fail(t, "expected without error")
+	}
+}
