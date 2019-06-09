@@ -16,10 +16,10 @@ type Maze [][]string
 
 func (solver *TinyMazeSolver) Solve(tinyMaze Maze) (Maze, error) {
 	if len(tinyMaze) == 0 {
-		return [][]string{}, errors.New("empty maze")
+		return nil, errors.New("empty maze")
 	}
-	if len(tinyMaze) == 1 && len(tinyMaze[0]) == 1 {
-		return [][]string{}, errors.New("maze should have Start and End")
+	if tinyMaze.findStartAndEnd() < 2  {
+		return nil, errors.New("maze should have Start and End")
 	}
 	var solvedMaze Maze
 	solvedMaze = tinyMaze
@@ -52,4 +52,16 @@ func (m *Maze) scanRow(rowNum int) error {
 
 func (m *Maze) markCell(rowNum int, colNum int) {
 	(*m)[rowNum][colNum] = ":x"
+}
+
+func (m *Maze) findStartAndEnd() int {
+	found := 0
+	for _, row := range *m {
+		for _, value := range row {
+			if value == start || value == end {
+				found++
+			}
+		}
+	}
+	return found
 }
