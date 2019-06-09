@@ -6,6 +6,10 @@ type TinyMazeSolver struct {
 
 }
 
+const wall = "1"
+const start = ":S"
+const end = ":E"
+
 type Maze [][]string
 
 func (solver *TinyMazeSolver) Solve(tinyMaze Maze) (Maze, error) {
@@ -28,11 +32,18 @@ func (solver *TinyMazeSolver) Solve(tinyMaze Maze) (Maze, error) {
 }
 
 func (m *Maze) scanRow(rowNum int) error {
-	for colNum, value := range (*m)[rowNum] {
-		if value == "1" {
-			return errors.New("maze without solution")
+	foundWalls := 0
+	row := (*m)[rowNum]
+	for colNum, value := range row {
+		if value == wall || value == start || value == end {
+			foundWalls++
 		}
-		m.markCell(rowNum, colNum)
+		if value != wall {
+			m.markCell(rowNum, colNum)
+		}
+	}
+	if len(row) == foundWalls && foundWalls > 2 {
+		return errors.New("maze without solution")
 	}
 	return nil
 }
