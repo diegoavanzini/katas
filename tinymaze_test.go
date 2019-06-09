@@ -89,3 +89,42 @@ func Test_MazeWithStartEndAndAWallBetween_ShouldReturnError(t *testing.T){
 		assert.Fail(t, "expected without error")
 	}
 }
+
+
+func Test_MazeWithStartEndAndAFreeSpaceBetween(t *testing.T){
+	maze := [][]string{
+		{":S", "0", ":E"},
+	}
+
+	solver := TinyMazeSolver{}
+
+	solvedMaze, err := solver.Solve(maze)
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	expected := Maze{{":x", ":x", ":x"}}
+	assert.Equal(t, expected ,solvedMaze)
+}
+
+func Test_MazeWithStartEndAndAMixedFreeSpaceAndWallBetween(t *testing.T){
+	maze := [][]string{
+		{":S", "0", "1"},
+		{"1", "0", ":E"},
+	}
+
+	solver := TinyMazeSolver{}
+
+	solvedMaze, err := solver.Solve(maze)
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	expected := Maze{
+		{":x", ":x", "1"},
+		{"1", ":x", ":x"},
+	}
+	assert.Equal(t, expected ,solvedMaze)
+}
