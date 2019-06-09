@@ -1,6 +1,8 @@
 package tinymaze
 
-import "errors"
+import (
+	"errors"
+)
 
 type TinyMazeSolver struct {
 

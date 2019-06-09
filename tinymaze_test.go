@@ -128,3 +128,64 @@ func Test_MazeWithStartEndAndAMixedFreeSpaceAndWallBetween(t *testing.T){
 	}
 	assert.Equal(t, expected ,solvedMaze)
 }
+
+
+func Test_MazeWithStartEndAndAMixedFreeSpaceAndWallBetweenInMoreThanThreeRows(t *testing.T){
+	maze := [][]string{
+		{":S", "0", "1", "1"},
+		{"1", "0", "1", "1"},
+		{"1", "0", "0", ":E"},
+	}
+
+	solver := TinyMazeSolver{}
+
+	solvedMaze, err := solver.Solve(maze)
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	expected := Maze{
+		{":x", ":x", "1", "1"},
+		{"1", ":x", "1", "1"},
+		{"1", ":x",":x", ":x"},
+	}
+	assert.Equal(t, expected ,solvedMaze)
+}
+
+
+func Test_MazeWithStartEndAndAMixedFreeSpaceAndWallBetweenInMoreThanThreeRows_WithoutSolution(t *testing.T){
+	maze := [][]string{
+		{":S", "0", "1", "1"},
+		{"1", "1", "1", "1"},
+		{"1", "0", "0", ":E"},
+	}
+
+	solver := TinyMazeSolver{}
+
+	_, err := solver.Solve(maze)
+
+	if err != nil {
+		assert.Equal(t, "maze without solution", err.Error())
+	} else {
+		assert.Fail(t, "expected without error")
+	}
+}
+
+func Test_MazeWithStartEndAndAMixedFreeSpaceAndWallBetweenInMoreThanThreeRows_WithoutEnd(t *testing.T){
+	maze := [][]string{
+		{":S", "0", "1", "1"},
+		{"1", "1", "1", "1"},
+		{"1", "0", "0", "1"},
+	}
+
+	solver := TinyMazeSolver{}
+
+	_, err := solver.Solve(maze)
+
+	if err != nil {
+		assert.Equal(t, "maze should have Start and End", err.Error())
+	} else {
+		assert.Fail(t, "expected without error")
+	}
+}
