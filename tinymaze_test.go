@@ -53,7 +53,7 @@ func Test_MazeWithOnlyStartAndEnd(t *testing.T){
 		t.Error(err)
 	}
 
-	expected := [][]string{{":x"}, {":x"}}
+	expected := Maze{{":x"}, {":x"}}
 	assert.Equal(t, expected ,solvedMaze)
 }
 
@@ -70,6 +70,6 @@ func Test_MazeWithOnlyStartAndEndInOneRow(t *testing.T){
 		t.Error(err)
 	}
 
-	expected := [][]string{{":x", ":x"}}
+	expected := Maze{{":x", ":x"}}
 	assert.Equal(t, expected ,solvedMaze)
 }
