@@ -14,8 +14,11 @@ func (solver *TinyMazeSolver) Solve(tinyMaze [][]string) ([][]string, error) {
 		return [][]string{}, errors.New("maze should have Start and End")
 	}
 
-	return [][]string{
-		{":x"},
-		{":x"},
-	}, nil
+	for rowNum, row := range tinyMaze {
+		for colNum, _ := range row {
+			tinyMaze[rowNum][colNum] = ":x"
+		}
+	}
+
+	return tinyMaze, nil
 }
