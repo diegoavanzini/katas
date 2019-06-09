@@ -18,16 +18,23 @@ func (solver *TinyMazeSolver) Solve(tinyMaze Maze) (Maze, error) {
 	var solvedMaze Maze
 	solvedMaze = tinyMaze
 	for rowNum, _ := range solvedMaze {
-		solvedMaze.scanRow(rowNum)
+		err := solvedMaze.scanRow(rowNum)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	return tinyMaze, nil
 }
 
-func (m *Maze) scanRow(rowNum int) {
-	for colNum, _ := range (*m)[rowNum] {
+func (m *Maze) scanRow(rowNum int) error {
+	for colNum, value := range (*m)[rowNum] {
+		if value == "1" {
+			return errors.New("maze without solution")
+		}
 		m.markCell(rowNum, colNum)
 	}
+	return nil
 }
 
 func (m *Maze) markCell(rowNum int, colNum int) {
